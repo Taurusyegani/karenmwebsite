@@ -1,0 +1,188 @@
+{% include "header.html" %}
+
+<!-- Page Header-->
+<header
+  class="masthead"
+  style="background-image: url('../static/assets/img/about-bg.jpg')"
+>
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="page-heading">
+          <h1>About Me</h1>
+          <span class="subheading">Actions speak louder than words.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main Content-->
+<main class="mb-4">
+  <div class="container px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <p>
+          Hey, I'm Kamie Morgan, also known as Karen.  I am a media pro with a gift for storytelling and a knack for building bridges between diverse worlds. My journey has been a whirlwind of adventures in TV & Film, Journalism, Communications, and PR.
+        </p>
+        <p>
+          Perhaps you've come across the film 'Get Gone' on Amazon Prime? Well, I had the honour of working as a Publicist on that one. It's a project I hold close to my heart.
+        </p>
+        <p>
+          But there's more to the story. My career took an exciting turn when I pitched a series of features to BBC, and they were not just accepted; they were commissioned. That opened the door to a new chapter as a News Reporter and Presenter for both BBC and ITV. I've always believed in the power of a good story to connect people.
+        </p>
+        <p>
+          In the realm of economic development, I've managed six successful concurrent campaigns for Nottingham City Council clients. And guess what? I was headhunted by industry giants like Eversheds Law Firm for a high-profile PR campaign. I thrive in the world of strategy and bringing creative ideas to life.
+        </p>
+        <p>
+          I've also had the privilege of sharing my knowledge as an educator, DEI Consultant, and Trainer, Business Advisor at the Chambers of Commerce and The University of Stirling. I've been recognized for my teaching excellence and even nominated for a RATE (teaching excellence award). For two years, I coordinated modules and delivered guest lectures in Effective Communication for Managers at the Singapore Institute of Management and Vietnam University Social Science University. I also led the Print Journalism program at Nottingham Trent University and the Broadcast Journalism program at the University of Stirling.
+        </p>
+        <p>
+          In a nutshell, I'm known for my storytelling skills, strong media connections, and unyielding professional standards. I'm a creative visionary with a passion for bringing stories to life and a team player with a commitment to your success. So, if you're on the hunt for someone who has a strategic mind, high emotional intelligence, is influential and can navigate diverse cultures and industries while offering a fresh perspective.
+        </p>
+        <p>
+          In the words of Olivia Pope … “I'm the answer to questions you didn't know you needed to ask.”
+        </p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<header class="masthead">
+  <div id="map"></div>
+  <script>
+    mapboxgl.accessToken =
+      'pk.eyJ1IjoidGF1cnVzMSIsImEiOiJjbGx0cWxycWExZGE0M2t0aGhyNDVucTV6In0.MoBQ88xtsYhEzyu6Sv43hQ';
+
+    const geojson = {
+      type: 'FeatureCollection',
+      features: [
+        {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [103.8502, 1.2963]
+          },
+          properties: {
+            description: 'Singapore Management University'
+          }
+        },
+        {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [105.8426, 21.0073]
+          },
+          properties: {
+            description: 'The University of Hanoi'
+          }
+        },
+        {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [106.6579, 10.7721]
+          },
+          properties: {
+            description: 'Ho Chi Minh University'
+          }
+        },
+        {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [-1.3333, 52.8333]
+          },
+          properties: {
+            description: 'BBC Eastmidlands'
+          }
+        },
+        {
+          type: 'Feature',
+          "icon-size": ['interpolate', ['linear'], ['zoom'], 10, 1, 15, 0.5],
+          geometry: {
+            type: 'Point',
+            coordinates: [-3.9178, 56.1461]
+          },
+          properties: {
+            description: 'Sterling University'
+          }
+        }
+      ]
+    };
+
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/taurus1/clmp56c1c01yp01nzesro4uux',
+      center: [103.8502, 1.2963],
+      zoom: 100,
+      minZoom: 1
+    });
+
+    const bounds = new mapboxgl.LngLatBounds();
+
+    geojson.features.forEach(function(marker) {
+      var el = document.createElement('div');
+      el.className = 'marker';
+
+      new mapboxgl.Marker({
+        element: el,
+        anchor: 'bottom'
+      })
+        .setLngLat(marker.geometry.coordinates)
+        .addTo(map);
+      new mapboxgl.Popup({
+        offset: 30,
+        closeOnClick: false
+      })
+        .setLngLat(marker.geometry.coordinates)
+        .setHTML('<p>' + marker.properties.description + '</p>')
+        .addTo(map);
+
+      bounds.extend(marker.geometry.coordinates);
+    });
+
+    map.fitBounds(bounds, {
+      padding: {
+        top: 200,
+        bottom: 150,
+        left: 50,
+        right: 50
+      }
+    });
+
+    map.on('load', function() {
+      map.addLayer({
+        id: 'route',
+        type: 'line',
+        source: {
+          type: 'geojson',
+          data: {
+            type: 'Feature',
+            properties: {},
+            geometry: {
+              type: 'LineString',
+              coordinates: [
+                [103.8502, 1.2963],
+                [105.8426, 21.0073],
+                [106.6579, 10.7721],
+                [-3.9178, 56.1461]
+              ]
+            }
+          }
+        },
+        layout: {
+          'line-join': 'round',
+          'line-cap': 'round'
+        },
+        paint: {
+          'line-color': '#fff',
+          'line-opacity': 0.6,
+          'line-width': 3
+        }
+      });
+    });
+  </script>
+  </div>
+</header>
+
+{% include "footer.html" %}

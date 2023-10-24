@@ -1,0 +1,45 @@
+{% include "header.html" %}
+
+<!-- Page Header-->
+<!--<header class="masthead" class="background-image" style="background-image: url('../static/assets/img/singapore.jpg')">-->
+<header class="masthead" class="background-image" style="background-image: url('../static/assets/img/{{ post.image_url }}')">
+
+    <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="post-heading">
+                    <h1>{{ post.title }}</h1>
+                    <p class="subheading">{{ post.subtitle }}</p>
+<!--                    <span class="meta">Posted by-->
+<!--                        <a href="#">{{ post.author }}</a>-->
+<!--                        on {{ post.date }}-->
+<!--                    </span>-->
+<!--                    <img src="static/assets/img/{{ post.image_url }}" alt={{ post.image_url }}  />-->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Post Content-->
+<article class="mb-4">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <ul>
+                    <h1>{{ post.heading }}</h1>
+                    {% for item in post.body %}
+                    {%+ if "|" in item +%}<br />
+                        <h3>{{ item }}</h3>
+                    {%+ else +%}
+                    <p>{{ item }}</p>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</article>
+
+{% include "footer.html" %}
