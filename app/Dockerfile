@@ -1,8 +1,7 @@
 FROM python:3.8-slim-buster
 COPY . .
-WORKDIR /app
-EXPOSE 5001
 ADD main.py .
-RUN pip3 install Flask
-RUN pip3 install requests
-CMD [ "python3", "-m" , "main.py", "--host=0.0.0.0"]
+RUN pip install Flask
+RUN pip install requests
+CMD ["python3", "./main.py", "--host=0.0.0.0"]
+EXPOSE 5001
