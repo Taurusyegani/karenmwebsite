@@ -5,4 +5,4 @@ EXPOSE 5001
 ADD main.py .
 RUN pip3 install Flask
 RUN pip3 install requests
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
+CMD [ "python3", "-m" , "main.py", "--host=0.0.0.0"]
